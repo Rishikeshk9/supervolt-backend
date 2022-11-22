@@ -9,6 +9,10 @@ const typeSchema = new Schema(
     name: {
       type: String,
     },
+    power: {
+      type: String,
+    },
+    
     image: {
       type: String,
       default:null
