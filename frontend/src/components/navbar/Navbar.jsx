@@ -14,17 +14,17 @@ function Navbar() {
       </label>
       <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
       <li>
-                <Link  to={'/create/dept'}>Add Dept</Link>
+                <Link  to={'/create/station'}>Stations</Link>
               </li>
               <li>
-                <Link to={'/create/type'}>Add Type</Link>
+                <Link to={'/create/type'}>Charger Types</Link>
               </li>
               <li>
-                <Link to={'/create/employee'}>Add Employee</Link>
+                <Link to={'/create/vehicle'}>Vehicles</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to={'/create/designation'}>Add Designation</Link>
-              </li>
+              </li> */}
       </ul>
     </div>
   </div>

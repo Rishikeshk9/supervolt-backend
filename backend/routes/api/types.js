@@ -36,9 +36,11 @@ router.get("/", (req, res) => {
 router.post("/",upload.single('image'), async (req, res) => {
   console.log("here");
   const { name } = req.body;
+  const { power } = req.body;
+
   const image = req.file?.filename
   try {
-    const type = new Types({ name: name, id: uuid.v4() ,image:image?image:null});
+    const type = new Types({ name: name, power:power, id: uuid.v4() ,image:image?image:null});
     await type.save();
     res.status(201).send("success");
   } catch (error) {

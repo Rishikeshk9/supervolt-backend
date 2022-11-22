@@ -17,13 +17,23 @@ function AddEmployee() {
 
   const [employees, setFetchEmployees] = useState();
 
-  const [designations, setFetchDesignations] = useState(null);
+  const [types, setFetchTypes] = useState(null);
   const [depts, setFetchDepts] = useState(null);
   const [users, setFetchUsers] = useState(null);
 
+  const wheels = [{
+    id:1,name: "Two"
+  },{id:2,name:"Three"},{id:2,name:"Four"}]
+
+  const brands = [{
+    id:1,name: "TATA"
+  },{id:2,name:"Tesla"},{id:3,name:"Kia"},{id:4,name:"Hyundai"},{id:5,name:"Mercedes"},{id:6,name:"BMW"},{id:7,name:"Mahindra"},{id:8,name:"Toyota"},{id:9,name:"Kia"}
+,{id:10,name:"Revolt"},{id:11,name:"Ather"},{id:12,name:"Miracle5"},{id:13,name:"Ola"},{id:14,name:"Honda"},{id:15,name:"Torq"},{id:16,name:"Ultraviollete"}]
+
+
   const updateEmployees = () => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/api/employees`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/api/vehicles`)
       .then(function (response) {
         console.log(response.data);
         setFetchEmployees(response.data);
@@ -38,15 +48,15 @@ function AddEmployee() {
     var requestOptions = {
       method: "GET",
     };
-    async function fetchDesignations() {
+    async function fetchTypes() {
       let data;
       axios
-        .get(`${process.env.REACT_APP_SERVER_URL}/api/designations`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/types`)
         .then(function (response) {
           console.log(response.data);
           data = response.data;
-          setFetchDesignations(data);
-          console.log(designations);
+          setFetchTypes(data);
+          console.log(types);
         })
         .catch((error) => console.log("error", error));
     }
@@ -54,16 +64,16 @@ function AddEmployee() {
     async function fetchDepts() {
       let data;
       axios
-        .get(`${process.env.REACT_APP_SERVER_URL}/api/depts`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/stations`)
         .then(function (response) {
           console.log(response.data);
           data = response.data;
           setFetchDepts(data);
-          console.log("DEPTS", depts);
+          console.log("Stations", depts);
         })
         .catch((error) => console.log("error", error));
     }
-    fetchDesignations();
+    fetchTypes();
 
     fetchDepts();
     updateEmployees();
@@ -86,23 +96,23 @@ function AddEmployee() {
   }
 
   const handleCreateEmployee = () => {
-    console.log("Create New Employee... Requesting");
+    console.log("Create New Vehicle... Requesting");
     const formData = new FormData();
     formData.append("name", employeeDetails.name);
-    formData.append("designation", employeeDetails.type);
+    formData.append("charger", employeeDetails.charger);
     formData.append("image", employeeDetails.image);
-    formData.append("department", employeeDetails.parent);
-    formData.append("mobile", employeeDetails.mobile);
-    formData.append("mobile2", employeeDetails.mobile2);
-    formData.append("website", employeeDetails.website);
-    formData.append("email", employeeDetails.email);
+    formData.append("wheels", employeeDetails.wheels);
+    formData.append("battery", employeeDetails.battery);
+    formData.append("brand", employeeDetails.brand);
+    formData.append("model", employeeDetails.model);
+ 
 
     if (employeeDetails.name && employeeDetails.type && employeeDetails.parent)
       axios
-        .post(`${process.env.REACT_APP_SERVER_URL}/api/employees`, formData)
+        .post(`${process.env.REACT_APP_SERVER_URL}/api/vehicles`, formData)
         .then(function (response) {
           console.log(response.data);
-          alert("Employee added successfully");
+          alert("Vehicle added successfully");
           updateEmployees();
           return response.data;
         })
@@ -122,7 +132,7 @@ function AddEmployee() {
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box bg-slate-100   ">
-          <div className="  gap-4  grid grid-cols-2 w-full md:w-1/2 mx-auto  rounded-xl ">
+          <div className="  gap-4  grid grid-cols-2 w-full   mx-auto  rounded-xl ">
             <div className=" w-full col-span-2  mx-auto  rounded-xl">
               <div className="   gap-4  grid grid-cols-2">
                 <input
@@ -132,44 +142,68 @@ function AddEmployee() {
                   name="image"
                   className="file-input file-input-bordered w-full  col-span-2"
                 />
+                <select
+                  className="select  select-bordered w-full  "
+                  name={"wheels"}
+                  onChange={(e) => handleChangeDepartment(e)}
+                >
+                  <option selected disabled>
+                    {"Select Wheels Count"}
+                  </option>
+                  {wheels?.length > 0
+                    ? wheels.map((option, key) => {
+                        return (
+                          <option key={key} value={option.id}>
+                            {option.name}
+                          </option>
+                        );
+                      })
+                    : null}
+                </select>
+                <select
+                  className="select  select-bordered w-full   "
+                  name={"brand"}
+                  onChange={(e) => handleChangeDepartment(e)}
+                >
+                  <option selected disabled>
+                    {"Select Vehicle Brand"}
+                  </option>
+                  {brands?.length > 0
+                    ? brands.map((option, key) => {
+                        return (
+                          <option key={key} value={option.id}>
+                            {option.name}
+                          </option>
+                        );
+                      })
+                    : null}
+                </select>
                 <input
                   type="text"
                   value={employeeDetails?.name}
                   onChange={handleChange}
                   name="name"
                   placeholder="Name"
-                  className="input input-bordered   w-full col-span-2"
+                  className="input input-bordered   w-full "
                 />
-
+ <input
+                  type="text"
+                  value={employeeDetails?.model}
+                  onChange={handleChange}
+                  name="model"
+                  placeholder="Model"
+                  className="input input-bordered   w-full  "
+                />
                 <select
                   className="select  select-bordered w-full  "
                   onChange={(e) => handleChangeType(e)}
-                  name={"type"}
+                  name={"charger"}
                 >
                   <option selected disabled>
-                    {"Select Designation"}
+                    {"Select Charger Type"}
                   </option>
-                  {designations?.length > 0
-                    ? designations.map((option, key) => {
-                        return (
-                          <option key={key} value={option.id}>
-                            {option.name}
-                          </option>
-                        );
-                      })
-                    : null}
-                </select>
-
-                <select
-                  className="select  select-bordered w-full  "
-                  name={"department"}
-                  onChange={(e) => handleChangeDepartment(e)}
-                >
-                  <option selected disabled>
-                    {"Select Department"}
-                  </option>
-                  {depts?.length > 0
-                    ? depts.map((option, key) => {
+                  {types?.length > 0
+                    ? types.map((option, key) => {
                         return (
                           <option key={key} value={option.id}>
                             {option.name}
@@ -181,36 +215,16 @@ function AddEmployee() {
 
                 <input
                   type="text"
-                  value={employeeDetails.mobile}
-                  placeholder="Mobile"
+                  value={employeeDetails?.battery}
                   onChange={handleChange}
-                  name="mobile"
-                  className="input input-bordered   w-full  "
+                  name="battery"
+                  placeholder="Battery Size in kWh"
+                  className="input input-bordered   w-full col-span-1"
                 />
-                <input
-                  type="text"
-                  value={employeeDetails.mobile2}
-                  placeholder="Mobile 2"
-                  onChange={handleChange}
-                  name="mobile2"
-                  className="input input-bordered   w-full  "
-                />
-                <input
-                  type="text"
-                  value={employeeDetails.website}
-                  placeholder="Website"
-                  onChange={handleChange}
-                  name="website"
-                  className="input input-bordered   w-full  "
-                />
-                <input
-                  type="text"
-                  value={employeeDetails.email}
-                  placeholder="Mail ID"
-                  onChange={handleChange}
-                  name="email"
-                  className="input input-bordered   w-full  "
-                />
+
+                
+
+                
               </div>
               <div className="modal-action">
                 <button

@@ -24,9 +24,9 @@ mongoose.connect(uri).then(()=>{
 })
 const dbName = 'directory'; 
 
- app.use("/api/depts", require("./routes/api/depts"));
+ app.use("/api/stations", require("./routes/api/stations"));
 app.use("/api/types", require("./routes/api/types"));
-app.use("/api/employees", require("./routes/api/employees"));
+app.use("/api/vehicles", require("./routes/api/vehicles"));
 app.use("/api/designations", require("./routes/api/designations"));
 
 app.listen(PORT, () => {

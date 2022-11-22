@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const employeeSchema = new Schema(
+const stationSchema = new Schema(
   {
     id: {
       type: String,
@@ -9,12 +9,10 @@ const employeeSchema = new Schema(
     name: {
       type: String,
     },
-    designation: {
+    type: {
       type: String,
     },
-    department: {
-      type: String,
-    },
+   
     mobile: {
       type: String,
     },
@@ -27,14 +25,27 @@ const employeeSchema = new Schema(
     email: {
       type: String,
     },
-    
+    address1: {
+      type: String,
+    },
+    address2: {
+      type: String,
+    },
+    pincode: {
+      type: Number,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
     image: {
       type: String,
-      default:null
     },
   },
   { timestamps: true }
 );
 
-const Employee = mongoose.model("Employee", employeeSchema);
-module.exports = Employee;
+const Station = mongoose.model("Station", stationSchema);
+module.exports = Station;

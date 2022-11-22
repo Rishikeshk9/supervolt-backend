@@ -4,7 +4,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const uuid = require("uuid");
-const Employee = require("../../models/employee.model");
+const Employee = require("../../models/vehicle.model");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -74,18 +74,18 @@ router.post("/", (req, res) => {
 
     name: req.body.name,
 
-    email: req.body.email,
+    brand:req.body.brand,
 
-    type:req.body.type,
+    charger:req.body.charger,
 
-    parent:req.body.parent,
+    wheels:req.body.wheels,
 
-    mobile:req.body.mobile,
+    model:req.body.model,
 
-    mobile2:req.body.mobile2,
+    battery:req.body.charger,
 
-    website:req.body.website,
-    
+    image:req.body.image,
+
     
 
   });

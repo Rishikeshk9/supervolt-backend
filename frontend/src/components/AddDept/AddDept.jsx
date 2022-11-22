@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import Dropdown from "../dropdown/Dropdown";
 import axios from "axios";
 import { createDepts, fetchDepts } from "../../api/Depts";
+import Table from "../Table/Table";
+
 function AddDept() {
   const [deptDetails, setDeptDetails] = useState({
     name: "",
-    type: "",
-    parent: "",
+    type: "", 
     mobile: "",
     mobile2: "",
     website: "",
@@ -42,7 +43,7 @@ function AddDept() {
     async function fetchUsers() {
       let data;
       axios
-        .get(`${process.env.REACT_APP_SERVER_URL}/api/users`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/vehicles`)
         .then(function (response) {
           console.log(response.data);
           data = response.data;
@@ -55,7 +56,7 @@ function AddDept() {
     async function fetchDepts() {
       let data;
       axios
-        .get(`${process.env.REACT_APP_SERVER_URL}/api/depts`)
+        .get(`${process.env.REACT_APP_SERVER_URL}/api/stations`)
         .then(function (response) {
           console.log(response.data);
           data = response.data;
@@ -90,8 +91,7 @@ function AddDept() {
     formData.append("name", deptDetails.name);
     formData.append("type", deptDetails.type);
     formData.append("image", deptDetails.image);
-    formData.append("parent", deptDetails.parent);
-    formData.append("mobile", deptDetails.mobile);
+     formData.append("mobile", deptDetails.mobile);
     formData.append("mobile2", deptDetails.mobile2);
     formData.append("website", deptDetails.website);
     formData.append("email", deptDetails.email);
@@ -101,8 +101,9 @@ function AddDept() {
     formData.append("pincode", deptDetails.pincode);
     formData.append("state", deptDetails.state);
 
+    if(deptDetails.name?.type?.image?.mobile?.website?.email?.address1?.address2?.city?.pincode?.state)
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/api/depts`, formData)
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/stations`, formData)
       .then(function (response) {
         console.log(response.data);
         return response.data;
@@ -111,16 +112,23 @@ function AddDept() {
         console.log(error);
       });
   };
-  return (
-    <div className="h-screen p-12">
-    <div className=" w-full sm:w-1/2 mx-auto shadow-md bg-white rounded-xl">
+  return (<div className="px-12 h-screen  ">
+  {/* The button to open modal */}
+  <label htmlFor="my-modal" className="btn btn-primary ml-auto">
+    Add new
+  </label>
+
+  {/* Put this part before </body> tag */}
+  <input type="checkbox" id="my-modal" className="modal-toggle" />
+  <div className="modal ">
+    <div className="modal-box bg-slate-100   ">
       <div className="p-5  gap-4  grid grid-cols-2">
         <input
           type={"file"}
           accept=".png, .jpg, .jpeg, "
           onChange={handleImage}
           name="image"
-          className="file-input file-input-bordered w-full max-w-xs" 
+          className="file-input file-input-bordered w-full col-span-2" 
         />
          <input
           type="text"
@@ -150,24 +158,7 @@ function AddDept() {
             : null}
         </select>
 
-        <select
-          className="select  select-bordered w-full  "
-          name={"parent"}
-          onChange={(e) => handleChangeParent(e)}
-        >
-          <option selected disabled>
-            {"Select Parent"}
-          </option>
-          {depts?.length > 0
-            ? depts.map((option, key) => {
-                return (
-                  <option key={key} value={option.id}>
-                    {option.name}
-                  </option>
-                );
-              })
-            : null}
-        </select>
+        
 
         <input
           type="text"
@@ -199,7 +190,7 @@ function AddDept() {
           placeholder="Mail ID"
           onChange={handleChange}
           name="email"
-          className="input input-bordered   w-full  "
+          className="input input-bordered   w-full  col-span-2"
         />
         <input
           type="text"
@@ -239,11 +230,21 @@ function AddDept() {
           onChange={handleChange}
           name="state"
         />
+        </div>
+        <div className="modal-action">
         <button className="btn btn-primary" onClick={() => handleCreateDept()}>
           Save
-        </button>
+        </button>  <label
+                  htmlFor="my-modal"
+                  className="btn  text-error btn-error btn-ghost"
+                >
+                  cancel
+                </label>
       </div>
-    </div></div>
+      </div>
+    </div> <div className="h-full  mt-2 space-y-2">
+        <Table data={depts} />
+      </div></div>
   );
 }
 
