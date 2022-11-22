@@ -36,9 +36,9 @@ router.get("/", (req, res) => {
 
 router.post("/",upload.single('image'),async(req,res)=>{
   try {
-    const {name,type,parent,mobile,mobile2,website,email,} = req.body;
+    const {name,wheels,charger,brand,model,battery} = req.body;
     const image = req.file?.filename
-    const employee = new Employee({id:uuid.v4(),name,type,parent,mobile,mobile2,website,email,image});
+    const employee = new Employee({id:uuid.v4(),name,wheels,charger,brand,model,battery,image});
     await employee.save()
     res.send('success');
 

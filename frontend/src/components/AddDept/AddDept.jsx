@@ -122,7 +122,7 @@ function AddDept() {
   <input type="checkbox" id="my-modal" className="modal-toggle" />
   <div className="modal ">
     <div className="modal-box bg-slate-100   ">
-      <div className="p-5  gap-4  grid grid-cols-2">
+      <div className=" gap-4  grid grid-cols-2">
         <input
           type={"file"}
           accept=".png, .jpg, .jpeg, "

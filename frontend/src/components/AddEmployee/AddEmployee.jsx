@@ -88,11 +88,13 @@ function AddEmployee() {
     setEmpDetails({ ...employeeDetails, image: e.target.files[0] });
   };
 
-  function handleChangeType(e) {
-    setEmpDetails({ ...employeeDetails, type: e.target.value });
+  function handleChangeCharger(e) {
+    setEmpDetails({ ...employeeDetails, charger: e.target.value });
+  } function handleChangeBrand(e) {
+    setEmpDetails({ ...employeeDetails, brand: e.target.value });
   }
-  function handleChangeDepartment(e) {
-    setEmpDetails({ ...employeeDetails, parent: e.target.value });
+  function handleChangeWheels(e) {
+    setEmpDetails({ ...employeeDetails, wheels: e.target.value });
   }
 
   const handleCreateEmployee = () => {
@@ -107,7 +109,7 @@ function AddEmployee() {
     formData.append("model", employeeDetails.model);
  
 
-    if (employeeDetails.name && employeeDetails.type && employeeDetails.parent)
+    if (employeeDetails.name && employeeDetails.charger && employeeDetails.battery)
       axios
         .post(`${process.env.REACT_APP_SERVER_URL}/api/vehicles`, formData)
         .then(function (response) {
@@ -145,7 +147,7 @@ function AddEmployee() {
                 <select
                   className="select  select-bordered w-full  "
                   name={"wheels"}
-                  onChange={(e) => handleChangeDepartment(e)}
+                  onChange={(e) => handleChangeWheels(e)}
                 >
                   <option selected disabled>
                     {"Select Wheels Count"}
@@ -153,7 +155,7 @@ function AddEmployee() {
                   {wheels?.length > 0
                     ? wheels.map((option, key) => {
                         return (
-                          <option key={key} value={option.id}>
+                          <option key={key} value={option.name}>
                             {option.name}
                           </option>
                         );
@@ -163,7 +165,7 @@ function AddEmployee() {
                 <select
                   className="select  select-bordered w-full   "
                   name={"brand"}
-                  onChange={(e) => handleChangeDepartment(e)}
+                  onChange={(e) => handleChangeBrand(e)}
                 >
                   <option selected disabled>
                     {"Select Vehicle Brand"}
@@ -171,7 +173,7 @@ function AddEmployee() {
                   {brands?.length > 0
                     ? brands.map((option, key) => {
                         return (
-                          <option key={key} value={option.id}>
+                          <option key={key} value={option.name}>
                             {option.name}
                           </option>
                         );
@@ -196,7 +198,7 @@ function AddEmployee() {
                 />
                 <select
                   className="select  select-bordered w-full  "
-                  onChange={(e) => handleChangeType(e)}
+                  onChange={(e) => handleChangeCharger(e)}
                   name={"charger"}
                 >
                   <option selected disabled>
@@ -205,7 +207,7 @@ function AddEmployee() {
                   {types?.length > 0
                     ? types.map((option, key) => {
                         return (
-                          <option key={key} value={option.id}>
+                          <option key={key} value={option.name}>
                             {option.name}
                           </option>
                         );
